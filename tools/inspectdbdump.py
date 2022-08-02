@@ -103,20 +103,19 @@ class DBStats:
       '''
       result = ""
       for k in self._stats.keys():
-         result += "Type: {}{}\n".format(args.prefix, k)
+         result += f"Type: {args.prefix}{k}\n"
          result += "  count: {:>10}\n".format(self._stats[k]["count"])
          result += "    sum: {:>10}\n".format(self._stats[k]["size"])
          result += "  histo:\n"
          histo_result = str(self._stats[k]["histo"])
          for l in histo_result.split("\n"):
-            result += "    {}\n".format(l)
+            result += f"    {l}\n"
       return result
 
 stats = DBStats()
 
 for line in args.filename:
-   match = pattern.match(line)
-   if match:
+   if match := pattern.match(line):
       stats.update(match.group(1), match.group(2))
 
 print(stats)
